@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erreur 404</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .ip {
+      color: #00ffcc;
+      font-size: 1.5em;
+      margin-top: 30px;
+    }
+    .alert {
+      color: red;
+      font-weight: bold;
+      margin-top: 50px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Erreur 404 - Page introuvable</h1>
+    <p>Chargement...</p>
+
+    <div class="ip" id="ip">Récupération de l'adresse IP...</div>
+    <div class="alert" id="alert">
+      🎯 Ton IP a été capturée !<br>
+      (Pas vraiment... c'était une simulation 👀)<br><br>
+      <em>Fais attention aux liens que tu cliques !</em>
+    </div>
+  </div>
+
+  <script>
+    fetch("https://api.ipify.org?format=json")
+      .then(response => response.json())
+      .then(data => {
+        const ipDiv = document.getElementById("ip");
+        const alertDiv = document.getElementById("alert");
+
+        ipDiv.textContent = "Adresse IP détectée : " + data.ip;
+        setTimeout(() => {
+          alertDiv.style.display = "block";
+        }, 2000);
+      })
+      .catch(error => {
+        document.getElementById("ip").textContent = "Erreur lors de la récupération de l'IP.";
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
